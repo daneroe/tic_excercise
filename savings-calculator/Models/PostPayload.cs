@@ -6,13 +6,12 @@ namespace savings_calculator
     {
         public PostPayload(float rate, int borrowAmount)
         {
-            Rate = rate;
+            CustomerRate = rate;
             BorrowingAmount = borrowAmount;
         }
 
         public string Merchant => "TIC";
         public string Lender => "BEN";
-        public float Rate { get; }
         public string RateType => "VAR";
         public string RepaymentType => "PI";
         public string PropertyUsage => "INV";
