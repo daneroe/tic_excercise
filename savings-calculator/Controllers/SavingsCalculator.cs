@@ -10,11 +10,8 @@ namespace savings_calculator.Controllers
     [Route("[controller]")]
     public class SavingsCalculatorController : ControllerBase
     {
-        private const string ClientId = "6mkpk5eguge2r1mei08q0d5ur2";
-        private const string ClientSecret = "16s99eq31eno4a8174r9vp9oemcms02egl3ha3ck794t6k0jk3em";
-        private const string TokenURL = "https://auth.stage.tictoc.ai/oauth2/token";
-        private const string ApiURL = "https://api.stage.tictoc.ai/product/v1.0/calculator/getloancomparison";
-        private const string Scope = "api.stage.tictoc.ai/devtask";
+        // Create new environment object
+        Environment Env = new Environment();
 
         [HttpGet]
         public async Task<RestResponse> Get([FromQuery] QueryParameters parameters) // Binding validation for params
@@ -30,12 +27,12 @@ namespace savings_calculator.Controllers
             RestClient httpClient = new();
 
             // Construct Bearer Token Request
-            RestRequest tokenRequest = new RestRequest(TokenURL)
+            RestRequest tokenRequest = new RestRequest(Env.GetTokenURL())
                 .AddHeader("Content-Type", "application/x-www-form-urlencoded")
                 .AddParameter("grant_type", "client_credentials")
-                .AddParameter("scope", Scope)
-                .AddParameter("client_id", ClientId)
-                .AddParameter("client_secret", ClientSecret);
+                .AddParameter("scope", Env.GetScope())
+                .AddParameter("client_id", Env.GetClientId())
+                .AddParameter("client_secret", Env.GetClientSecret());
 
             // Request Token
             RestResponse tokenResponse = await httpClient.PostAsync(tokenRequest);
@@ -44,8 +41,8 @@ namespace savings_calculator.Controllers
             TokenObject token = JsonConvert.DeserializeObject<TokenObject>(tokenResponse.Content);
 
             // Construct API request adding auth and params
-            RestRequest apiRequest = new RestRequest(ApiURL)
-                .AddHeader("API", ApiURL)
+            RestRequest apiRequest = new RestRequest(Env.GetApiURL())
+                .AddHeader("API", Env.GetApiURL())
                 .AddHeader("Authorization", token.GetTokenString()) 
                 .AddJsonBody(body);
 
