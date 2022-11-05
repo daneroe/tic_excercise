@@ -4,12 +4,20 @@ import { Container } from 'reactstrap';
 export class Layout extends Component {
   static displayName = Layout.name;
 
-  render () {
+  styles = {
+    cont: {
+      width: '100%',
+      margin: 'auto',
+      height: "100vh",
+      paddingTop: "20px",
+      backgroundColor: '#f2f2f2'
+    }
+  };
+
+  render() {
     return (
-      <div>
-        <Container> 
-          {this.props.children}
-        </Container>
+      <div className='cont' style={this.styles.cont}>
+        {this.props.children}
       </div>
     );
   }
