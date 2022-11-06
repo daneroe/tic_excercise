@@ -7,6 +7,9 @@ Navigating to the 'savings-calculator' folder and running 'dotnet build' command
 Upon successful build, run 'dotnet run watch' command.
 React app should spin up on https port 5001.
 
+## Note
+'Environment.cs' is git-ignored so API keys are not saved in source code. Will provide file separetely.
+
 ## Assumptions / Clarifications
 No refresh token is issued by token endpoint, so assuming that each api call needs to retrieve a new token?
 Can save token client side, but with no refresh token would need to:
