@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 using Newtonsoft.Json;
+using System;
 
 namespace savings_calculator.Controllers
 {
@@ -12,6 +13,23 @@ namespace savings_calculator.Controllers
     {
         // Create new environment object
         Environment Env = new Environment();
+
+        async Task<string> getToken(RestClient httpClient) {
+            // Construct Bearer Token Request
+            RestRequest tokenRequest = new RestRequest(Env.GetTokenURL())
+                .AddHeader("Content-Type", "application/x-www-form-urlencoded")
+                .AddParameter("grant_type", "client_credentials")
+                .AddParameter("scope", Env.GetScope())
+                .AddParameter("client_id", Env.GetClientId())
+                .AddParameter("client_secret", Env.GetClientSecret());
+
+            // Request Token
+            RestResponse tokenResponse = await httpClient.PostAsync(tokenRequest);
+
+            // Deserialise token into Token object
+            TokenObject token = JsonConvert.DeserializeObject<TokenObject>(tokenResponse.Content);
+            return token.GetTokenString();
+        }
 
         [HttpGet]
         public async Task<RestResponse> Get([FromQuery] QueryParameters parameters) // Binding validation for params
@@ -26,24 +44,10 @@ namespace savings_calculator.Controllers
             // Create Rest Client
             RestClient httpClient = new();
 
-            // Construct Bearer Token Request
-            RestRequest tokenRequest = new RestRequest(Env.GetTokenURL())
-                .AddHeader("Content-Type", "application/x-www-form-urlencoded")
-                .AddParameter("grant_type", "client_credentials")
-                .AddParameter("scope", Env.GetScope())
-                .AddParameter("client_id", Env.GetClientId())
-                .AddParameter("client_secret", Env.GetClientSecret());
-
-            // Request Token
-            RestResponse tokenResponse = await httpClient.PostAsync(tokenRequest);
-
-            // Deserialise token into Token object
-            TokenObject token = JsonConvert.DeserializeObject<TokenObject>(tokenResponse.Content);
-
             // Construct API request adding auth and params
             RestRequest apiRequest = new RestRequest(Env.GetApiURL())
                 .AddHeader("API", Env.GetApiURL())
-                .AddHeader("Authorization", token.GetTokenString()) 
+                .AddHeader("Authorization", await getToken(httpClient))
                 .AddJsonBody(body);
 
             // Execute API request
