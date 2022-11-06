@@ -139,7 +139,7 @@ export class Home extends Component {
       <div>
         <div className="savingsCont" style={this.styles.savingsCont}>
           <div className="savingsRow" style={this.styles.savingsRow}>
-            <div><b>Savings per Month</b></div>
+            <div><b>Monthly Savings</b></div>
           </div>
           <div className="savingsRow" style={this.styles.savingsRow}>
             <span style={this.styles.savings}>
