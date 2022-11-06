@@ -5,34 +5,43 @@ import { MdArrowRightAlt } from 'react-icons/md';
 export class Home extends Component {
   static displayName = Home.name;
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      customerRate: 4.29,
+      borrowAmount: 600000,
+      savingsObject: null,
+      loading: false
+    };
+  }
+
   styles = {
     card: {
       fontFamily: 'Helvetica',
-      width: '50%',
+      width: '30%',
       margin: 'auto',
-      padding: '30px',
+      padding: '30px 0 10px 30px',
       backgroundColor: 'white',
       borderRadius: "10px",
       display: "flex",
-      flexDirection: "column"
+      flexDirection: "column",
+      boxShadow: '5px 5px #ebeced'
     },
     row: {
       marginTop: "10px",
       marginBottom: "10px",
+      width: "100%",
     },
     savingsCont: {
       borderRadius: "5px",
-      border: 'solid 2px #f2f2f2',
-      padding: "10px",
-      margin: '20px -10px 0 -10px',
+      margin: '20px 20px 0 -10px',
     },
     savingsRow: {
-      marginTop: "5px",
-      marginBottom: "5px",
+      margin: "5px 0 5px 0",
     },
     button: {
       borderRadius: "25px",
-      backgroundColor: "#3495eb",
+      backgroundColor: "#0075FF",
       padding: '10px 20px 10px 20px',
     },
     savings: {
@@ -52,16 +61,6 @@ export class Home extends Component {
     maximumFractionDigits: 0,
     minimumFractionDigits: 0,
   });
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      customerRate: 4.29,
-      borrowAmount: 600000,
-      savingsObject: null,
-      loading: false
-    };
-  }
 
   handleRateChange = (event) => this.setState({ customerRate: event.target.value })
   handleAmountChange = (event) => this.setState({ borrowAmount: event.target.value })
@@ -97,7 +96,7 @@ export class Home extends Component {
           <div><b>Current Rate</b></div>
         </div>
         <div className="row" style={this.styles.row}>
-          <input id='volume' type='range' min="2.00" max="20.00" step="0.1" value={this.state.customerRate}
+          <input style={{ width: "100% "}} id='volume' type='range' min="2.00" max="20.00" step="0.1" value={this.state.customerRate}
             onChange={this.handleRateChange}>
           </input>
         </div>
@@ -111,7 +110,7 @@ export class Home extends Component {
           <div><b>Borrowing Amount</b></div>
         </div>
         <div className="row" style={this.styles.row}>
-          <input id='volume' type='range' min="100000" max="1000000" step="500" value={this.state.borrowAmount}
+          <input style={{ width: "100% "}} id='volume' type='range' min="100000" max="1000000" step="500" value={this.state.borrowAmount}
             onChange={this.handleAmountChange}>
           </input>
         </div>
