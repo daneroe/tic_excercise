@@ -14,7 +14,8 @@ namespace savings_calculator.Controllers
         // Create new environment object
         Environment Env = new Environment();
 
-        async Task<string> getToken(RestClient httpClient) {
+        // Async function for token retrieval
+        async Task<string> GetToken(RestClient httpClient) {
             // Construct Bearer Token Request
             RestRequest tokenRequest = new RestRequest(Env.GetTokenURL())
                 .AddHeader("Content-Type", "application/x-www-form-urlencoded")
@@ -47,7 +48,7 @@ namespace savings_calculator.Controllers
             // Construct API request adding auth and params
             RestRequest apiRequest = new RestRequest(Env.GetApiURL())
                 .AddHeader("API", Env.GetApiURL())
-                .AddHeader("Authorization", await getToken(httpClient))
+                .AddHeader("Authorization", await GetToken(httpClient))
                 .AddJsonBody(body);
 
             // Execute API request
