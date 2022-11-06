@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Input, InputGroup, InputGroupText } from 'reactstrap';
+import { Button, Input, InputGroup, InputGroupText, Alert } from 'reactstrap';
 import { MdArrowRightAlt } from 'react-icons/md';
+import Spinner from 'reactstrap/lib/Spinner';
 
 export class Home extends Component {
   static displayName = Home.name;
@@ -11,9 +12,12 @@ export class Home extends Component {
       customerRate: 4.29,
       borrowAmount: 600000,
       savingsObject: null,
-      loading: false
+      loading: false,
+      valid: true
     };
   }
+
+  API_URL = 'https://localhost:5001';
 
   styles = {
     card: {
@@ -64,11 +68,25 @@ export class Home extends Component {
   });
 
   // Handlers
-  handleRateChange = (event) => this.setState({ customerRate: event.target.value })
-  handleAmountChange = (event) => this.setState({ borrowAmount: event.target.value })
+  handleRateChange = (event) => {
+    this.setState({
+      customerRate: event.target.value,
+      valid: this.checkValidState(event.target.value)
+    });
+  }
 
-  // Sections - Keeping these all in single component for sake of simplicity.
-  cardComponent = (loading, savings) => {
+  handleAmountChange = (event) =>
+    this.setState({
+      borrowAmount: event.target.value,
+      valid: this.checkValidState(event.target.value)
+    });
+
+  // State validator 
+  checkValidState = (value) =>
+    this.state.customerRate >= 1 && this.state.borrowAmount >= 1 && value >= 1 ? true : false;
+
+  // Sections - Keeping these all in single component for sake of simplicity and time constraints.
+  cardComponent = (loading, savings, valid) => {
     return (
       <div className="cont" style={this.styles.card}>
         <div className="row" stype={this.styles.row}>
@@ -105,16 +123,18 @@ export class Home extends Component {
           </InputGroup>
         </div>
         <div className="row" style={this.styles.row}>
-          <Button className="button" style={this.styles.button} onClick={() => this.getSavings()}>
+          <Button disabled={!this.state.valid} className="button" style={this.styles.button} onClick={() => this.getSavings()} >
             Submit <MdArrowRightAlt />
           </Button>
         </div>
         {loading}
         {savings}
-      </div>)
+        {valid}
+      </div>
+    );
   }
 
-  savingsSection = () => {
+  savingsComponent = () => {
     return (
       <div>
         <div className="savingsCont" style={this.styles.savingsCont}>
@@ -135,17 +155,36 @@ export class Home extends Component {
     )
   }
 
+  loadingComponent = () => {
+    return (
+      <div className="row" stype={this.styles.row}>
+        <Spinner color="info" type="grow" />
+      </div>
+    );
+  }
+
+  warningComponent = () => {
+    return (
+      <div className="row" stype={this.styles.row}>
+        <Alert color="warning">
+          Invalid values.
+        </Alert>
+      </div>
+    );
+  }
+
   render() {
-    let loading = this.state.loading ? <p><em>Loading...</em></p> : ''
-    let savings = this.state.savingsObject == null || this.state.loading ? <p></p> : this.savingsSection();
-    return (this.cardComponent(loading, savings))
+    let loading = this.state.loading ? this.loadingComponent() : '';
+    let valid = this.state.valid ? '' : this.warningComponent();
+    let savings = this.state.savingsObject == null || this.state.loading ? <p></p> : this.savingsComponent();
+    return (this.cardComponent(loading, savings, valid));
   }
 
   async getSavings() {
     const rate = this.state.customerRate / 100;
     const amount = this.state.borrowAmount;
-    this.setState({ loading: true })
-    const response = await fetch(`https://localhost:5001/SavingsCalculator?CustomerRate=${rate}&BorrowingAmount=${amount}`);
+    this.setState({ loading: true });
+    const response = await fetch(`${this.API_URL}/SavingsCalculator?CustomerRate=${rate}&BorrowingAmount=${amount}`);
     const data = await response.json();
     this.setState({ savingsObject: JSON.parse(data.content), loading: false });
   }
