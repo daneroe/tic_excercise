@@ -8,7 +8,7 @@ export class Layout extends Component {
       width: '100%',
       margin: 'auto',
       height: "100vh",
-      paddingTop: "20px",
+      paddingTop: "50px",
       backgroundColor: '#f2f2f2'
     }
   };
