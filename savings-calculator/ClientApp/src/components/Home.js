@@ -86,7 +86,7 @@ export class Home extends Component {
     this.state.customerRate >= 1 && this.state.borrowAmount >= 1 && value >= 1 ? true : false;
 
   // Sections - Keeping these all in single component for sake of simplicity and time constraints.
-  cardComponent = (loading, savings, valid) => {
+  cardSubComponent = (loading, savings, valid) => {
     return (
       <div className="cont" style={this.styles.card}>
         <div className="row" stype={this.styles.row}>
@@ -134,7 +134,7 @@ export class Home extends Component {
     );
   }
 
-  savingsComponent = () => {
+  savingsSubComponent = () => {
     return (
       <div>
         <div className="savingsCont" style={this.styles.savingsCont}>
@@ -142,20 +142,24 @@ export class Home extends Component {
             <div><b>Savings per Month</b></div>
           </div>
           <div className="savingsRow" style={this.styles.savingsRow}>
-            <span style={this.styles.savings}>{this.dollar.format(this.state.savingsObject.MonthlyRepaymentDifference)}</span>
+            <span style={this.styles.savings}>
+              {this.dollar.format(Math.abs(this.state.savingsObject.MonthlyRepaymentDifference))}
+            </span>
           </div>
           <div className="savingsRow" style={this.styles.savingsRow}>
             <div><b>Total Savings</b></div>
           </div>
           <div className="savingsRow" style={this.styles.savingsRow}>
-            <span style={this.styles.savings}>{this.dollar.format(this.state.savingsObject.TotalSaved)}</span>
+            <span style={this.styles.savings}>
+              {this.dollar.format(Math.abs(this.state.savingsObject.TotalSaved))}
+            </span>
           </div>
         </div>
       </div>
     )
   }
 
-  loadingComponent = () => {
+  loadingSubComponent = () => {
     return (
       <div className="row" stype={this.styles.row}>
         <Spinner color="info" type="grow" />
@@ -163,7 +167,7 @@ export class Home extends Component {
     );
   }
 
-  warningComponent = () => {
+  warningSubComponent = () => {
     return (
       <div className="row" stype={this.styles.row}>
         <Alert color="warning">
@@ -174,10 +178,10 @@ export class Home extends Component {
   }
 
   render() {
-    let loading = this.state.loading ? this.loadingComponent() : '';
-    let valid = this.state.valid ? '' : this.warningComponent();
-    let savings = this.state.savingsObject == null || this.state.loading ? <p></p> : this.savingsComponent();
-    return (this.cardComponent(loading, savings, valid));
+    let loading = this.state.loading ? this.loadingSubComponent() : '';
+    let valid = this.state.valid ? '' : this.warningSubComponent();
+    let savings = this.state.savingsObject == null || this.state.loading ? <p></p> : this.savingsSubComponent();
+    return (this.cardSubComponent(loading, savings, valid));
   }
 
   async getSavings() {
