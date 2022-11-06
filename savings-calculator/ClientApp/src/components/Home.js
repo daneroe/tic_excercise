@@ -1,23 +1,19 @@
 import React, { Component } from 'react';
-import { Button, Input, InputGroup, InputGroupText, Alert } from 'reactstrap';
+import { Button, Input, InputGroup, InputGroupText } from 'reactstrap';
 import { MdArrowRightAlt } from 'react-icons/md';
 import Loading from './Loading'
 import Warning from './Warning';
 import Savings from './Savings';
 
 export class Home extends Component {
-  static displayName = Home.name;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      customerRate: 4.29,
-      borrowAmount: 600000,
-      savingsObject: null,
-      loading: false,
-      valid: true
-    };
-  }
+  state = {
+    customerRate: 4.29,
+    borrowAmount: 600000,
+    savingsObject: null,
+    loading: false,
+    valid: true
+  };
 
   API_URL = 'https://localhost:5001';
 
@@ -134,12 +130,16 @@ export class Home extends Component {
   async getSavings() {
     const rate = this.state.customerRate / 100;
     const amount = this.state.borrowAmount;
-    
+
     this.setState({ loading: true });
-    
+
     const response = await fetch(`${this.API_URL}/SavingsCalculator?CustomerRate=${rate}&BorrowingAmount=${amount}`);
     const data = await response.json();
-    
-    this.setState({ savingsObject: JSON.parse(data.content), loading: false });
+
+    this.setState({
+      savingsObject: JSON.parse(data.content),
+      loading: false
+    });
   }
+
 }
