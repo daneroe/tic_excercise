@@ -11,7 +11,7 @@ App generated with .NET Core react template.
 ## Note
 'Environment.cs' is git-ignored so API keys are not saved in source code. Will provide file separetely.
 
-## Assumptions / Clarifications
+## Assumptions / Clarifications / Questions
 No refresh token is issued by token endpoint, so assuming that each api call needs to retrieve a new token?  
 Can save token client side, but with no refresh token would need to:
 
@@ -21,3 +21,7 @@ Can save token client side, but with no refresh token would need to:
 
 Not ideal.  
 Based on testing, speed overhead for grabbing token is about a second. Probably not worth implementing either of the aboveoptions in alloted time.
+
+### Tictoc specific
+Best practices for using types in React? Static type Checking (Flow / TS) etc.  
+State management? (Not using REDUX from memory?)
