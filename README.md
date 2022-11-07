@@ -3,10 +3,10 @@
 ## Installation
 App generated with .NET Core react template.  
 
-Clone repo.  
-Navigate to the 'savings-calculator' folder and running 'dotnet build' command.  
-Upon successful build, run 'dotnet run watch' command.  
-React app should spin up on https port 5001.  
+* Clone repo.  
+* Navigate to the 'savings-calculator' folder and running 'dotnet build' command.  
+* Upon successful build, run 'dotnet run watch' command.  
+* React app should spin up on https port 5001.  
 
 ## Note
 'Environment.cs' is git-ignored so API keys are not saved in source code. Will provide file separetely.
