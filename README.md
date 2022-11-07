@@ -22,6 +22,6 @@ Can save token client side, but with no refresh token would need to:
 Not ideal.  
 Based on testing, speed overhead for grabbing token is about a second. Probably not worth implementing either of the aboveoptions in alloted time.
 
-### Tictoc specific
+### Front end
 Best practices for using types in React? Static type Checking (Flow / TS) etc.  
 State management? (Not using REDUX from memory?)
