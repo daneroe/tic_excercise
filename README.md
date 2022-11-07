@@ -12,7 +12,7 @@ App generated with .NET Core react template.
 'Environment.cs' is git-ignored so API keys are not saved in source code. Will provide file separetely.
 
 ## Assumptions / Clarifications
-No refresh token is issued by token endpoint, so assuming that each api call needs to retrieve a new token?
+No refresh token is issued by token endpoint, so assuming that each api call needs to retrieve a new token?  
 Can save token client side, but with no refresh token would need to:
 
 * Keep track of time delta client side, exclude auth header after 3600 seconds and retrieve new token 
