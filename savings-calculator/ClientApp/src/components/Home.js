@@ -51,7 +51,8 @@ export class Home extends Component {
 
   // Handlers
   handleRateChange = (event) => {
-    const value = parseFloat(this.validateHelper(event.target.value)).toFixed(2)
+    const empty = (event.target.value == "_.__%");
+    const value = empty ? parseFloat(0.00).toFixed(2) : parseFloat(this.validateHelper(event.target.value)).toFixed(2)
     this.setState({
       customerRate: value,
       valid: this.checkValidState(value)
@@ -59,21 +60,26 @@ export class Home extends Component {
   }
 
   handleAmountChange = (event) => {
-    const value = parseInt(this.validateHelper(event.target.value))
+    const empty = (event.target.value == "" || event.target.value == "$");
+    const value = empty ? parseInt(0) : parseInt(this.validateHelper(event.target.value));
     return this.setState({
       borrowAmount: value,
       valid: this.checkValidState(value)
-  })}
+    });
+  }
 
   // Validators
-  validateHelper = (value) => 
-    value.replace("_", "").replace("%", '').replace(",", "").replace("$", "");
+  validateHelper = (value) =>
+    value.replace("_", "")
+      .replace("%", '')
+      .replace(",", "")
+      .replace("$", "");
 
   checkValidState = (value) => {
     console.log(this.state.customerRate, this.state.borrowAmount, value)
     return this.state.customerRate >= 1 && this.state.borrowAmount >= 1 && value >= 1 ? true : false;
   }
-  
+
   // Main component
   card = (loading, savings, warning) => {
     return (
@@ -88,11 +94,11 @@ export class Home extends Component {
           </input>
         </div>
         <div className="row" style={this.styles.row}>
-            <Input type="string" id='rate'
-              mask={this.PERC_MASK}
-              value={this.state.customerRate}
-              tag={InputMask}
-              onChange={this.handleRateChange}></Input>
+          <Input type="string" id='rate'
+            mask={this.PERC_MASK}
+            value={this.state.customerRate}
+            tag={InputMask}
+            onChange={this.handleRateChange}></Input>
         </div>
         <div className="row" stype={this.styles.row}>
           <div><b>Borrowing Amount</b></div>
@@ -104,10 +110,10 @@ export class Home extends Component {
           </input>
         </div>
         <div className="row" style={this.styles.row}>
-            <Input id='amount' type='string'
-              value={this.dollar.format(this.state.borrowAmount)}
-              onChange={this.handleAmountChange} >
-            </Input>
+          <Input id='amount' type='string'
+            value={this.dollar.format(this.state.borrowAmount)}
+            onChange={this.handleAmountChange} >
+          </Input>
         </div>
         <div className="row" style={this.styles.row}>
           <Button disabled={!this.state.valid} className="button" style={this.styles.button}
@@ -129,9 +135,9 @@ export class Home extends Component {
     let savings = (this.state.savingsObject == null || this.state.loading)
       ? <p></p>
       : <Savings
-          monthlySavings={this.state.savingsObject.MonthlyRepaymentDifference}
-          totalSavings={this.state.savingsObject.TotalSaved}>
-        </Savings>;
+        monthlySavings={this.state.savingsObject.MonthlyRepaymentDifference}
+        totalSavings={this.state.savingsObject.TotalSaved}>
+      </Savings>;
 
     return (this.card(loading, savings, valid));
   }
