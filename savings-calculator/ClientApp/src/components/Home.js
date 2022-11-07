@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Button, Input, InputGroup, InputGroupText } from 'reactstrap';
+import { Button, Input } from 'reactstrap';
 import { MdArrowRightAlt } from 'react-icons/md';
 import Loading from './Loading'
 import Warning from './Warning';
 import Savings from './Savings';
 import InputMask from 'react-input-mask';
-
 export class Home extends Component {
 
   state = {
@@ -19,7 +18,6 @@ export class Home extends Component {
   API_URL = 'https://localhost:5001';
   PERC_MASK = '9.99%';
 
- 
   dollar = Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -61,7 +59,7 @@ export class Home extends Component {
   }
 
   handleAmountChange = (event) => {
-    const value = parseFloat(this.validateHelper(event.target.value))
+    const value = parseInt(this.validateHelper(event.target.value))
     return this.setState({
       borrowAmount: value,
       valid: this.checkValidState(value)
@@ -69,7 +67,7 @@ export class Home extends Component {
 
   // Validators
   validateHelper = (value) => 
-  value.replace("_", "").replace("%", '').replace(",", "").replace("$", "");
+    value.replace("_", "").replace("%", '').replace(",", "").replace("$", "");
 
   checkValidState = (value) => {
     console.log(this.state.customerRate, this.state.borrowAmount, value)
@@ -125,16 +123,15 @@ export class Home extends Component {
   }
 
   render() {
-
     // Conditional renders
     let loading = this.state.loading ? <Loading></Loading> : '';
     let valid = !this.state.valid ? <Warning></Warning> : '';
-    let savings = this.state.savingsObject == null || this.state.loading
+    let savings = (this.state.savingsObject == null || this.state.loading)
       ? <p></p>
       : <Savings
-        monthlySavings={this.state.savingsObject.MonthlyRepaymentDifference}
-        totalSavings={this.state.savingsObject.TotalSaved}>
-      </Savings>;
+          monthlySavings={this.state.savingsObject.MonthlyRepaymentDifference}
+          totalSavings={this.state.savingsObject.TotalSaved}>
+        </Savings>;
 
     return (this.card(loading, savings, valid));
   }
