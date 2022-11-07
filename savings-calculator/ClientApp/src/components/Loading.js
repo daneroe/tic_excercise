@@ -1,7 +1,6 @@
 
 import Spinner from "reactstrap/lib/Spinner";
 import React, { Component } from 'react';
-
 class Loading extends Component {
 
     styles = {

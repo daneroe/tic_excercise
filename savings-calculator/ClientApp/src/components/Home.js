@@ -5,6 +5,7 @@ import Loading from './Loading'
 import Warning from './Warning';
 import Savings from './Savings';
 import InputMask from 'react-input-mask';
+
 export class Home extends Component {
 
   state = {
