@@ -1,8 +1,8 @@
 # tic_excercise
 
 ## Installation
-App generated with .NET Core react template.
-Clone repo.
+App generated with .NET Core react template.  
+Clone repo.  
 Navigating to the 'savings-calculator' folder and running 'dotnet build' command.  
 Upon successful build, run 'dotnet run watch' command.  
 React app should spin up on https port 5001.  
