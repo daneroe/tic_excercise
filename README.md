@@ -13,6 +13,9 @@ App generated with .NET Core react template.
 
 ## Assumptions / Clarifications / Questions
 
+### Backend
+.NET, uses thread pool so can be non-blocking or blocking?
+
 ### Auth
 No refresh token is issued by token endpoint, so assuming that each api call needs to retrieve a new token?  
 Can save token client side, but with no refresh token would need to:
