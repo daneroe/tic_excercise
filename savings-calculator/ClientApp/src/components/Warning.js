@@ -6,16 +6,16 @@ class Warning extends Component {
 
     styles = {
         row: {
-            margin: "10px 0 10 0",
-            width: "100%",
+            margin: "20px 0 0 -10px",
+            width: "90%",
         }
     }
 
     render() {
         return (
-            <div className="row" stype={this.styles.row}>
+            <div className="row" style={this.styles.row}>
                 <Alert color="warning">
-                    Invalid values.
+                    Please enter valid values.
                 </Alert>
             </div>
         );

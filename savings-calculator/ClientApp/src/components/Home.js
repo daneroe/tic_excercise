@@ -121,9 +121,9 @@ export class Home extends Component {
             Submit <MdArrowRightAlt />
           </Button>
         </div>
+        {warning}
         {loading}
         {savings}
-        {warning}
       </div>
     );
   }
