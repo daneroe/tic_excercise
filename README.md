@@ -4,7 +4,7 @@
 App generated with .NET Core react template.  
 
 * Clone repo.  
-* Navigate to the 'savings-calculator' folder and running 'dotnet build' command.
+* Navigate to the 'savings-calculator' folder and running 'dotnet build' command (Should install .NET and Node Deps).
 * Upon successful build, run 'dotnet run watch' command.  
 * React app should spin up on https://localhost:5001.  
 
