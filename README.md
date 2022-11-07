@@ -22,7 +22,7 @@ Can save token client side, but with no refresh token would need to:
 * Let Server hit API endpoint and get an unauthorised error, then handle this error, retrive new token, then resend request
 
 Not ideal.  
-Based on testing, speed overhead for grabbing token is about a second. Probably not worth implementing either of the aboveoptions in alloted time.
+Based on testing, speed overhead for grabbing token is about a second. Probably not worth implementing either of the above options in alloted time.
 
 ### Front end
 Best practices for using types in React? Static type Checking (Flow / TS) etc.  
