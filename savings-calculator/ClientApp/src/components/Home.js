@@ -53,7 +53,7 @@ export class Home extends Component {
   // Handlers
   handleRateChange = (event) => {
     const empty = (event.target.value == "_.__%");
-    const value = empty ? parseFloat(0.00).toFixed(2) : parseFloat(this.validateHelper(event.target.value)).toFixed(2)
+    const value = empty ? parseFloat(0.00).toFixed(2) : parseFloat(this.symbolStripper(event.target.value)).toFixed(2)
     this.setState({
       customerRate: value,
       valid: this.checkValidState(value)
@@ -62,15 +62,15 @@ export class Home extends Component {
 
   handleAmountChange = (event) => {
     const empty = (event.target.value == "" || event.target.value == "$");
-    const value = empty ? parseInt(0) : parseInt(this.validateHelper(event.target.value));
-    return this.setState({
+    const value = empty ? parseInt(0) : parseInt(this.symbolStripper(event.target.value));
+    this.setState({
       borrowAmount: value,
       valid: this.checkValidState(value)
     });
   }
 
   // Validators
-  validateHelper = (value) =>
+  symbolStripper = (value) =>
     value.replace("_", "")
       .replace("%", '')
       .replace(",", "")

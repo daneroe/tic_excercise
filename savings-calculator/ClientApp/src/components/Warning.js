@@ -15,7 +15,7 @@ class Warning extends Component {
         return (
             <div className="row" style={this.styles.row}>
                 <Alert color="warning">
-                    Please enter valid values.
+                    Please enter valid values
                 </Alert>
             </div>
         );

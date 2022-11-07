@@ -13,13 +13,13 @@ namespace savings_calculator.Controllers
     {
       
         // Create Rest Client
-        public RestClient httpClient = new();
+        private RestClient httpClient = new();
 
         // Create new environment object
         private Environment Env = new Environment();
 
         // Async function for token retrieval - Can probably just access the httpClient directly in the function as it's all class properties 
-        async Task<string> GetToken(RestClient httpClient) {
+        private async Task<string> GetToken(RestClient httpClient) {
             // Construct Bearer Token Request
             RestRequest tokenRequest = new RestRequest(Env.GetTokenURL())
                 .AddHeader("Content-Type", "application/x-www-form-urlencoded")
